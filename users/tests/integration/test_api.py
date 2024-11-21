@@ -8,19 +8,19 @@ new_user_id = ""
 new_user = {"name": "John Doe"}
 
 def test_access_to_the_users_without_authentication(global_config):
-    response = requests.get(global_config["https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod"] + '/users')
+    response = requests.get(global_config["APIEndpoint"] + '/users')
     assert response.status_code == 401
 
 def test_get_list_of_users_by_regular_user(global_config):
     response = requests.get(
-        global_config["https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod"] + '/users',
+        global_config["APIEndpoint"] + '/users',
         headers={'Authorization': global_config["regularUserIdToken"]}
     )
     assert response.status_code == 403
 
 def test_deny_post_user_by_regular_user(global_config):
     response = requests.post(
-        global_config["https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod"] + '/users',
+        global_config["APIEndpoint"] + '/users',
         data=json.dumps(new_user),
         headers={'Authorization': global_config["regularUserIdToken"],
                  'Content-Type': 'application/json'}
@@ -29,7 +29,7 @@ def test_deny_post_user_by_regular_user(global_config):
 
 def test_allow_post_user_by_administrative_user(global_config):
     response = requests.post(
-        global_config["https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod"] + '/users',
+        global_config["APIEndpoint"] + '/users',
         data=json.dumps(new_user),
         headers={'Authorization': global_config["adminUserIdToken"],
                  'Content-Type': 'application/json'}
@@ -43,7 +43,7 @@ def test_allow_post_user_by_administrative_user(global_config):
 def test_deny_post_invalid_user(global_config):
     new_invalid_user = {"Name": "John Doe"}
     response = requests.post(
-        global_config["https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod"] + '/users',
+        global_config["APIEndpoint"] + '/users',
         data=new_invalid_user,
         headers={'Authorization': global_config["adminUserIdToken"],
                  'Content-Type': 'application/json'}
@@ -52,7 +52,7 @@ def test_deny_post_invalid_user(global_config):
 
 def test_get_user_by_regular_user(global_config):
     response = requests.get(
-        global_config["https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod"] + f'/users/{new_user_id}',
+        global_config["APIEndpoint"] + f'/users/{new_user_id}',
         headers={'Authorization': global_config["regularUserIdToken"]}
     )
     assert response.status_code == 403
