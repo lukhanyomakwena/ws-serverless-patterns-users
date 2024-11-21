@@ -1,0 +1,18 @@
+curl https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod/users 
+
+
+
+aws cognito-idp initiate-auth --auth-flow USER_PASSWORD_AUTH --client-id 5pdmbe9jie9j5sp3k2s6aqborb --auth-parameters USERNAME="lmakwena023@student.wethinkcode.co.za",PASSWORD="Lukh@ny023" --query "AuthenticationResult.IdToken" --output text
+
+
+export ID_TOKEN=$(aws cognito-idp initiate-auth --auth-flow USER_PASSWORD_AUTH --client-id 5pdmbe9jie9j5sp3k2s6aqborb --auth-parameters USERNAME="lmakwena023@student.wethinkcode.co.za",PASSWORD="Lukh@ny023" --query "AuthenticationResult.IdToken" --output text)
+echo $ID_TOKEN
+
+curl https://h5kbb42ha0.execute-api.eu-west-1.amazonaws.com/Prod/users -H "Authorization:$ID_TOKEN"
+
+
+
+export USERS_STACK_NAME=ws-serverless-patterns-users
+export ORDERS_STACK_NAME=ws-serverless-patterns-orders
+
+
