@@ -1,0 +1,10 @@
+version = 0.1
+[default.deploy.parameters]
+stack_name = "ws-serverless-patterns-polling"
+resolve_s3 = true
+s3_prefix = "ws-serverless-patterns-polling"
+region = "eu-west-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+parameter_overrides = "OrdersTablename=\"ws-serverless-patterns-orders-OrdersTable-V3MZ8UG3T9FD\" UserPool=\"eu-west-1_ZftYlbiKT\" Stage=\"dev\""
+image_repositories = []
